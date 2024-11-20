@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body { background-color: #e0f7fa; font-family: 'Arial', sans-serif; }
+        .header { background-color: #00796b; color: white; padding: 20px 0; }
+        .header h1 { font-size: 2.5rem; }
+        .jumbotron { background-color: #b2dfdb; border-radius: 10px; padding: 30px; margin: 20px 0; }
+        .form-section { background-color: #ffffff; border-radius: 10px; padding: 30px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); }
+        .btn-custom { background-color: #00796b; color: white; }
+        .btn-custom:hover { background-color: #004d40; }
+        .description { font-size: 0.9rem; color: #555; }
+        .result { margin-top: 20px; padding: 15px; background-color: #d0f0c0; border-radius: 10px; }
+    </style>
+
+    <title>Heart Disease Predictor</title>
+</head>
+<body>
+
+    <header class="header text-center">
+        <h1>Heart Disease Predictor</h1>
+    </header>
+
+    <div class="container">
+        <div class="jumbotron">
+            <h2 class="display-4 text-center">Assess Your Heart Health</h2>
+            <p class="lead text-center">Fill in the details below to get a personalized heart disease risk prediction.</p>
+        </div>
+
+        <div class="form-section">
+            <form id="predictionForm" onsubmit="return false;">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="age"><strong>Age (Years)</strong></label>
+                        <input type="number" class="form-control" id="age" name="age" placeholder="Enter your age" value="50" required>
+                        <small class="description">Your age in years. Heart disease risk increases with age.</small>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="gender"><strong>Gender</strong></label>
+                        <select id="gender" class="form-control" name="gender" required>
+                            <option value="" disabled>Select your gender</option>
+                            <option value="1" selected>Male</option>
+                            <option value="0">Female</option>
+                        </select>
+                        <small class="description">Select your gender. Men are generally at higher risk.</small>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="chestpain"><strong>Chest Pain Type</strong></label>
+                        <select id="chestpain" class="form-control" name="chestpain" required>
+                            <option value="" disabled>Select chest pain type</option>
+                            <option value="1" selected>Typical Angina</option>
+                            <option value="2">Atypical Angina</option>
+                            <option value="3">Non-Anginal Pain</option>
+                            <option value="4">Asymptomatic</option>
+                        </select>
+                        <small class="description">Type of chest pain you experience: Typical Angina, Atypical Angina, Non-Anginal Pain, Asymptomatic.</small>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="restingBP"><strong>Resting Blood Pressure (mm Hg)</strong></label>
+                        <input type="number" class="form-control" id="restingBP" name="restingBP" placeholder="Enter blood pressure" value="130" required>
+                        <small class="description">Your blood pressure when at rest. Higher levels can indicate risk.</small>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="serumcholesterol"><strong>Serum Cholesterol (mg/dl)</strong></label>
+                        <input type="number" class="form-control" id="serumcholesterol" name="serumcholesterol" placeholder="Enter cholesterol level" value="210" required>
+                        <small class="description">Cholesterol level in your blood. High levels can lead to heart issues.</small>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="fastingbloodsugar"><strong>Fasting Blood Sugar</strong></label>
+                        <select id="fastingbloodsugar" class="form-control" name="fastingbloodsugar" required>
+                            <option value="" disabled>Select fasting blood sugar level</option>
+                            <option value="0">Less than 120 mg/dl</option>
+                            <option value="1" selected>Greater than 120 mg/dl</option>
+                        </select>
+                        <small class="description">Blood sugar level after fasting. High levels can increase risk.</small>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="restingrelectro"><strong>Resting Electrocardiographic Results</strong></label>
+                        <select id="restingrelectro" class="form-control" name="restingrelectro" required>
+                            <option value="" disabled>Select ECG result</option>
+                            <option value="0">Normal</option>
+                            <option value="1">ST-T Wave Abnormality</option>
+                            <option value="2" selected>Left Ventricular Hypertrophy</option>
+                        </select>
+                        <small class="description">Results from an ECG test. Normal, ST-T Wave Abnormality, or Left Ventricular Hypertrophy.</small>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="maxheartrate"><strong>Max Heart Rate Achieved</strong></label>
+                        <input type="number" class="form-control" id="maxheartrate" name="maxheartrate" placeholder="Enter max heart rate" value="140" required>
+                        <small class="description">Your highest heart rate during exercise.</small>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="exerciseangina"><strong>Exercise Induced Angina</strong></label>
+                        <select id="exerciseangina" class="form-control" name="exerciseangina" required>
+                            <option value="" disabled selected>Select if you experience angina</option>
+                            <option value="0">No</option>
+                            <option value="1" selected>Yes</option>
+                        </select>
+                        <small class="description">Whether you experience chest pain during exercise. Yes indicates higher risk.</small>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="oldpeak"><strong>Oldpeak (ST Depression)</strong></label>
+                        <input type="number" step="0.1" class="form-control" id="oldpeak" name="oldpeak" placeholder="Enter oldpeak value" value="1.0" required>
+                        <small class="description">A measure of ST segment depression during exercise.</small>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="slope"><strong>Slope of Peak Exercise ST Segment</strong></label>
+                        <input type="number" class="form-control" id="slope" name="slope" placeholder="Enter slope value" value="2" required>
+                        <small class="description">The slope of the ST segment during peak exercise.</small>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="numvessels"><strong>Number of Major Vessels (0-3)</strong></label>
+                        <input type="number" class="form-control" id="numvessels" name="numvessels" placeholder="Enter number of vessels" value="0" required>
+                        <small class="description">Count of major vessels colored by fluoroscopy.</small>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-custom" id="predictBtn">Predict</button>
+            </form>
+
+            <div id="result" class="result" style="display: none;">
+                <h3>Prediction Result</h3>
+                <p id="predictionOutput"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        // When the form is submitted
+        $('#predictBtn').click(function() {
+            // Collecting the form data
+            var formData = {
+                age: $('#age').val(),
+                gender: $('#gender').val(),
+                chestpain: $('#chestpain').val(),
+                restingBP: $('#restingBP').val(),
+                serumcholesterol: $('#serumcholesterol').val(),
+                fastingbloodsugar: $('#fastingbloodsugar').val(),
+                restingrelectro: $('#restingrelectro').val(),
+                maxheartrate: $('#maxheartrate').val(),
+                exerciseangina: $('#exerciseangina').val(),
+                oldpeak: $('#oldpeak').val(),
+                slope: $('#slope').val(),
+                noofmajorvessels: $('#numvessels').val()
+            };
+
+            // Sending an AJAX request to Flask backend
+            $.ajax({
+                url: '/predict',  // The Flask route where prediction is made
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function(response) {
+                    // Showing the result after getting the response
+                    var predictionPercentage = response.prediction * 100;  // Convert the prediction to percentage
+                    $('#predictionOutput').text('Heart Disease Risk Prediction: ' + predictionPercentage.toFixed(2) + '%');  // Show the percentage with 2 decimal points
+                    $('#result').show();  // Display the result div
+
+                },
+                error: function(error) {
+                    console.log('Error:', error);
+                }
+            });
+        });
+    </script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
